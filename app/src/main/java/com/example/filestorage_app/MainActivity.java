@@ -32,14 +32,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.recyclerview_users);
-
         GET_FILES();
     }
 
     ArrayList<MainActivity_model> file_list;
 
     void GET_FILES() {
-        String URL = "http://192.168.0.40/prototype_project_board/prototype_board/api/get_files.php";;
+        String URL = getString(R.string.URL)+"get_files.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -60,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(adapter);
-
-
                 }
                 catch (JSONException e){}
                 catch (Exception e){}

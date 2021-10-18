@@ -45,7 +45,7 @@ public class Login extends AppCompatActivity {
     }
 
     void api_login_function(final String input_username, final String input_password) {
-        String URL = "http://192.168.0.40/prototype_project_board/prototype_board/api/login.php";
+        String URL =  getString(R.string.URL)+"login.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
