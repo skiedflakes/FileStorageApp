@@ -85,8 +85,8 @@ public class Login extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> hashMap = new HashMap<>();
-                hashMap.put("username", "admin");
-                hashMap.put("password", "12345");
+                hashMap.put("username", input_username);
+                hashMap.put("password", input_password);
                 return hashMap;
             }
         };
