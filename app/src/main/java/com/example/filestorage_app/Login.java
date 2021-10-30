@@ -48,8 +48,8 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 String input_username = username.getText().toString();
                 String input_password = password.getText().toString();
-//                api_login_function(input_username,input_password);
-                haveStoragePermission();
+                api_login_function(input_username,input_password);
+              //  haveStoragePermission();
 
             }
         });
