@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">FileStorage_app</string>
-    <string name="URL">http://192.168.0.27/prototype_project_board/prototype_board/api/</string>
+    <string name="URL">http://192.168.0.35/prototype_project_board/prototype_board/api/</string>
+    <string name="Download_FILE_URL">http://192.168.0.35/prototype_project_board/prototype_board/uploads/</string>
 </resources>

@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -22,9 +21,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class SharedFiles extends AppCompatActivity {
 
-    private MainActivity_adapter adapter;
+    private SharedFiles_adapter adapter;
     private RecyclerView recyclerView;
 
     SessionManager session;
@@ -33,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_shared_files);
         recyclerView = findViewById(R.id.recyclerview_users);
         GET_FILES();
         session = new SessionManager(getApplicationContext());
@@ -45,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<MainActivity_model> file_list;
 
     void GET_FILES() {
-        String URL = getString(R.string.URL)+"get_files.php";
+        String URL = getString(R.string.URL)+"get_share_files.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                     file_list = new ArrayList<MainActivity_model>();
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
-                    Log.i("jr",response);
+
                     for (int i=0; i<jsonArray.length(); i++){
                         JSONObject jsonObject1 = (JSONObject)jsonArray.get(i);
 
@@ -62,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
                                 jsonObject1.getString("file_path"),jsonObject1.getString("filename")));
                     }
 
-                    adapter = new MainActivity_adapter(MainActivity.this, file_list);
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+                    adapter = new SharedFiles_adapter(SharedFiles.this, file_list);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SharedFiles.this);
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(adapter);
                 }
@@ -89,8 +88,4 @@ public class MainActivity extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(stringRequest);
         AppController.getInstance().setVolleyDuration(stringRequest);
     }
-
-
-
-
 }

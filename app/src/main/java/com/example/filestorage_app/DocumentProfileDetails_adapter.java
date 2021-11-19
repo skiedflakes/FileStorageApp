@@ -33,13 +33,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity_adapter extends RecyclerView.Adapter<MainActivity_adapter.UsersViewHolder> {
+public class DocumentProfileDetails_adapter extends RecyclerView.Adapter<DocumentProfileDetails_adapter.UsersViewHolder> {
     private ArrayList<MainActivity_model> dataList;
     private Context context;
     JSONArray jsonArray;
     JSONObject jsonObject;
     DownloadManager manager;
-    public MainActivity_adapter(Context context, ArrayList<MainActivity_model> dataList){
+    public DocumentProfileDetails_adapter(Context context, ArrayList<MainActivity_model> dataList){
         this.dataList = dataList;
         this.context = context;
     }
@@ -57,10 +57,13 @@ public class MainActivity_adapter extends RecyclerView.Adapter<MainActivity_adap
         final String filename = dataList.get(position).getfilename();
         final String filepath = dataList.get(position).getfilepath();
         String URL = context.getString(R.string.Download_FILE_URL);
+        final String final_file_path;
+        if(filepath.equals("0")){
+            final_file_path = URL+"/"+filename;
+        }else{
+            final_file_path = URL+filepath+"/"+filename;
+        }
 
-
-
-        String final_file_path = URL+filename;
         holder.btn_users.setText(filename);
 
         holder.btn_users.setOnClickListener(new View.OnClickListener() {

@@ -34,12 +34,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Login extends AppCompatActivity {
+  SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        session = new SessionManager(getApplicationContext());
         final EditText username = findViewById(R.id.username);
         final EditText password = findViewById(R.id.password);
         Button login = findViewById(R.id.login_btn);
@@ -49,29 +50,16 @@ public class Login extends AppCompatActivity {
                 String input_username = username.getText().toString();
                 String input_password = password.getText().toString();
                 api_login_function(input_username,input_password);
-              //  haveStoragePermission();
+
 
             }
         });
+        haveStoragePermission();
     }
     public  boolean haveStoragePermission() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
-                Log.e("Permission error","You have permission");
-                String testurl = "http://localhost/prototype_project_board/prototype_board/uploads/document.pdf";
-                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(testurl));
-                String title = URLUtil.guessFileName(testurl,null,null);
-                request.setTitle(title);
-                request.setDescription("download files");
-                String cookie = CookieManager.getInstance().getCookie(testurl);
-                request.addRequestHeader("cookie",cookie);
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,title);
-
-                DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-                downloadManager.enqueue(request);
-                Toast.makeText(Login.this, "Downloaded started", Toast.LENGTH_SHORT).show();
 
                 return true;
             } else {
@@ -91,22 +79,7 @@ public class Login extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
-            //you have the permission now.
-            String testurl = "http://localhost/prototype_project_board/prototype_board/uploads/document.pdf";
-            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(testurl));
-            String title = URLUtil.guessFileName(testurl,null,null);
-            request.setTitle(title);
-            request.setDescription("download files");
-            String cookie = CookieManager.getInstance().getCookie(testurl);
-            request.addRequestHeader("cookie",cookie);
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,title);
 
-            DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-            downloadManager.enqueue(request);
-            Toast.makeText(Login.this, "Downloaded started", Toast.LENGTH_SHORT).show();
-        }
     }
 
 
@@ -121,16 +94,17 @@ public class Login extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("data");
 
-                    String user_id, status;
+                    String user_id, status,group_id;
                     JSONObject jo = jsonArray.getJSONObject(0);
                     status = jo.getString("status");
                     user_id = jo.getString("user_id");
-
+                    group_id = jo.getString("group_id");
                     Log.e("hahaha",status);
                     if(status.equals("1")){
+                        session.createLoginSession(user_id,group_id);
                         Toast.makeText(Login.this, "Login Success", Toast.LENGTH_SHORT).show();
 
-                        Intent i = new Intent(Login.this, MainActivity.class);
+                        Intent i = new Intent(Login.this, HomeSelectNavigation.class);
                         startActivity(i);
                         Login.this.finish();
                     }else{

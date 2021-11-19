@@ -22,18 +22,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class DocumentProfileDetails extends AppCompatActivity {
 
-    private MainActivity_adapter adapter;
+    private DocumentProfileDetails_adapter adapter;
     private RecyclerView recyclerView;
 
     SessionManager session;
-    String user;
+    String user,folder_id,filename;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+             filename = extras.getString("filename");
+             folder_id = extras.getString("folder_id");
+
+            Log.e("Testfolder",folder_id+" - "+filename);
+            //The key argument here must match that used in the other activity
+        }
+
         recyclerView = findViewById(R.id.recyclerview_users);
         GET_FILES();
         session = new SessionManager(getApplicationContext());
@@ -45,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<MainActivity_model> file_list;
 
     void GET_FILES() {
-        String URL = getString(R.string.URL)+"get_files.php";
+        String URL = getString(R.string.URL)+"get_files_by_folder.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new com.android.volley.Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -62,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
                                 jsonObject1.getString("file_path"),jsonObject1.getString("filename")));
                     }
 
-                    adapter = new MainActivity_adapter(MainActivity.this, file_list);
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
+                    adapter = new DocumentProfileDetails_adapter(DocumentProfileDetails.this, file_list);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(DocumentProfileDetails.this);
                     recyclerView.setLayoutManager(layoutManager);
                     recyclerView.setAdapter(adapter);
                 }
@@ -82,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String,String> hashMap = new HashMap<>();
                 hashMap.put("user_id", user);
+                hashMap.put("folder_id", folder_id);
 
                 return hashMap;
             }
