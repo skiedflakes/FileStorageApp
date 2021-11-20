@@ -49,7 +49,7 @@ public class Login extends AppCompatActivity {
             public void onClick(View view) {
                 String input_username = username.getText().toString();
                 String input_password = password.getText().toString();
-                api_login_function(input_username,input_password);
+                api_login_function2(input_username,input_password);
 
 
             }
@@ -83,11 +83,10 @@ public class Login extends AppCompatActivity {
     }
 
 
+    void api_login_function2(final String input_username, final String input_password) {
 
-
-    void api_login_function(final String input_username, final String input_password) {
-        String URL =  getString(R.string.URL)+"login.php";
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+        String URL = getString(R.string.URL) + "login.php";
+        StringRequest sr = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -118,23 +117,18 @@ public class Login extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                try{
-                    Toast.makeText(Login.this, "Error connection", Toast.LENGTH_SHORT).show();
-
-                }catch (Exception e){}
+                // error
             }
-        }){
+        }) {
+
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> hashMap = new HashMap<>();
-                hashMap.put("username", input_username);
-                hashMap.put("password", input_password);
-                return hashMap;
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", input_username);
+                params.put("password", input_password);
+                return params;
             }
-        };
-        AppController.getInstance().addToRequestQueue(stringRequest);
-        AppController.getInstance().setVolleyDuration(stringRequest);
+        }; AppController.getInstance().addToRequestQueue(sr);
+        AppController.getInstance().setVolleyDuration(sr);
     }
-
-
 }

@@ -1,6 +1,5 @@
 package com.example.filestorage_app;
 
-
 import android.app.Application;
 import android.text.TextUtils;
 
@@ -10,7 +9,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-public class AppController extends Application{
+public class AppController extends Application {
 
     public static final String TAG = AppController.class.getSimpleName();
 
@@ -39,11 +38,13 @@ public class AppController extends Application{
     public <T> void addToRequestQueue(Request<T> req, String tag) {
         // set the default tag if tag is empty
         req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
+        req.setRetryPolicy(new DefaultRetryPolicy(30000, 1, 1));
         getRequestQueue().add(req);
     }
 
     public <T> void addToRequestQueue(Request<T> req) {
         req.setTag(TAG);
+        req.setRetryPolicy(new DefaultRetryPolicy(30000, 1, 1));
         getRequestQueue().add(req);
     }
 

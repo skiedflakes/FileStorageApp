@@ -53,7 +53,7 @@ public class DocumentProfile extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    //((Main)getActivity()).alert_debug(response);
+                    Log.i("test",response);
                     file_list = new ArrayList<DocumentProfile_model>();
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("data");

@@ -58,6 +58,7 @@ public class SharedFiles_adapter extends RecyclerView.Adapter<SharedFiles_adapte
         final String filepath = dataList.get(position).getfilepath();
         String URL = context.getString(R.string.Download_FILE_URL);
         final String final_file_path;
+
         if(filepath.equals("0")){
            final_file_path = URL+"/"+filename;
         }else{
@@ -77,8 +78,6 @@ public class SharedFiles_adapter extends RecyclerView.Adapter<SharedFiles_adapte
                 request.setDescription("Downloading "+filename);
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                 request.setVisibleInDownloadsUi(false);
-//
-//                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
                 manager.enqueue(request);
             }
         });
@@ -98,8 +97,4 @@ public class SharedFiles_adapter extends RecyclerView.Adapter<SharedFiles_adapte
             btn_users = itemView.findViewById(R.id.btn_users);
         }
     }
-
-
-
-
 }
