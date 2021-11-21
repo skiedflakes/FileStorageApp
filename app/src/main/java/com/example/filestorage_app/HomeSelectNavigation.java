@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class HomeSelectNavigation extends AppCompatActivity {
 
-    Button shared_files_btn,files_btn,document_profile_btn;
+    Button shared_files_btn,files_btn,document_profile_btn,logout_btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,7 +17,7 @@ public class HomeSelectNavigation extends AppCompatActivity {
         document_profile_btn = findViewById(R.id.document_profile_btn);
         shared_files_btn=findViewById(R.id.shared_files_btn);
         files_btn = findViewById(R.id.files_btn);
-
+        logout_btn = findViewById(R.id.logout_btn);
         document_profile_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,6 +46,15 @@ public class HomeSelectNavigation extends AppCompatActivity {
                 Intent i = new Intent(HomeSelectNavigation.this, MainActivity.class);
                 startActivity(i);
 
+            }
+        });
+
+        logout_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(HomeSelectNavigation.this, Login.class);
+                startActivity(i);
+                HomeSelectNavigation.this.finish();
             }
         });
     }
