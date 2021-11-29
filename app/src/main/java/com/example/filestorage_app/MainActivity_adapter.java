@@ -66,7 +66,7 @@ public class MainActivity_adapter extends RecyclerView.Adapter<MainActivity_adap
         holder.btn_users.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Test download", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Download started", Toast.LENGTH_SHORT).show();
                 manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
                 Uri uri = Uri.parse(final_file_path);
                 DownloadManager.Request request = new DownloadManager.Request(uri);

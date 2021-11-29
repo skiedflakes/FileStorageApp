@@ -60,7 +60,7 @@ public class SharedFiles_adapter extends RecyclerView.Adapter<SharedFiles_adapte
         final String final_file_path;
 
         if(filepath.equals("0")){
-           final_file_path = URL+"/"+filename;
+           final_file_path = URL+filename;
         }else{
              final_file_path = URL+filepath+"/"+filename;
         }
@@ -70,7 +70,7 @@ public class SharedFiles_adapter extends RecyclerView.Adapter<SharedFiles_adapte
         holder.btn_users.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Test download", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Download started", Toast.LENGTH_SHORT).show();
                 manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
                 Uri uri = Uri.parse(final_file_path);
                 DownloadManager.Request request = new DownloadManager.Request(uri);
